@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { FaBriefcase, FaBuilding, FaMapMarkerAlt, FaSearch } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 export default function Jobs() {
   const [jobs, setJobs] = useState([]);
@@ -26,7 +27,7 @@ export default function Jobs() {
       }
     }
 
-    axios.get('/api/jobs')
+    axios.get(`${API_BASE_URL}/api/jobs`)
       .then(res => {
         setJobs(res.data);
         setFilteredJobs(res.data);
@@ -75,7 +76,7 @@ export default function Jobs() {
     formData.append('coverLetter', coverLetter);
 
     try {
-      await axios.post(`http://localhost:5000/api/jobs/${selectedJobId}/apply`, formData, {
+      await axios.post(`${API_BASE_URL}/api/jobs/${selectedJobId}/apply`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'

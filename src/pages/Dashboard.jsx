@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { FaBell, FaTrash, FaEdit, FaTimes, FaBuilding, FaMapMarkerAlt, FaDollarSign, FaPhone } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 export default function Dashboard() {
   const [notifs, setNotifs] = useState([]);
@@ -25,12 +26,12 @@ export default function Dashboard() {
     setUserRole(decoded.role);
     setUserName(decoded.name || 'User');
 
-    axios.get('/api/notifications', {
+    axios.get(`${API_BASE_URL}/api/notifications`, {
       headers: { Authorization: `Bearer ${storedToken}` }
     }).then(res => setNotifs(res.data));
 
     if (decoded.role === 'employer') {
-      axios.get(`/api/jobs/employer/${decoded.id || decoded._id || decoded.userId || decoded.user_id}`, {
+      axios.get(`${API_BASE_URL}/api/jobs/employer/${decoded.id || decoded._id || decoded.userId || decoded.user_id}`, {
         headers: { Authorization: `Bearer ${storedToken}` }
       }).then(res => setJobs(res.data));
     }
@@ -38,7 +39,7 @@ export default function Dashboard() {
 
   const handleDeleteNotification = async (id) => {
     try {
-      await axios.delete(`/api/notifications/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/notifications/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setNotifs(prev => prev.filter(n => n._id !== id));
@@ -53,7 +54,7 @@ export default function Dashboard() {
       : '❌ Your CV has been declined. Thank you for applying.';
 
     try {
-      await axios.post(`/api/notifications/respond/${notifId}`, { response: message }, {
+      await axios.post(`${API_BASE_URL}/api/notifications/respond/${notifId}`, { response: message }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -67,7 +68,7 @@ export default function Dashboard() {
 
   const fetchEmployerDetails = async (employerId) => {
     try {
-      const res = await axios.get(`/api/users/${employerId}`, {
+      const res = await axios.get(`${API_BASE_URL}/api/users/${employerId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setEmployerDetails(res.data);
@@ -80,7 +81,7 @@ export default function Dashboard() {
   const handleDeleteJob = async (jobId) => {
     if (!window.confirm('Are you sure you want to delete this job?')) return;
     try {
-      await axios.delete(`/api/jobs/${jobId}`, {
+      await axios.delete(`${API_BASE_URL}/api/jobs/${jobId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setJobs(prev => prev.filter(j => j._id !== jobId));
@@ -113,7 +114,7 @@ export default function Dashboard() {
   const handleEditJobSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/jobs/${editJob._id}`, editForm, {
+      await axios.put(`${API_BASE_URL}/api/jobs/${editJob._id}`, editForm, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setJobs(prev => prev.map(j => j._id === editJob._id ? { ...j, ...editForm } : j));
@@ -175,7 +176,7 @@ export default function Dashboard() {
                       <div className="flex gap-2">
                         {notif.cv && (
                           <a
-                            href={`http://localhost:5000/${notif.cv.replace(/\\/g, '/')}`}
+                            href={`${API_BASE_URL}/${notif.cv.replace(/\\/g, '/')}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-600 underline text-xs flex items-center gap-1 font-semibold"

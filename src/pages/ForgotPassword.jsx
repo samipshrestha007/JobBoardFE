@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaEnvelope, FaLock, FaKey, FaArrowLeft } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 export default function ForgotPassword() {
   const [step, setStep] = useState(1); // 1: email, 2: code, 3: new password
@@ -20,7 +21,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+      const response = await axios.post(`${API_BASE_URL}/api/auth/forgot-password`, { email });
       setSuccess(response.data.message);
       if (response.data.mockMode) {
         setSuccess(`${response.data.message} (Check server console for code)`);
@@ -39,7 +40,7 @@ export default function ForgotPassword() {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/auth/check-code', { 
+      await axios.post(`${API_BASE_URL}/api/auth/check-code`, { 
         email, 
         verificationCode: resetCode,
         type: 'reset'
@@ -70,7 +71,7 @@ export default function ForgotPassword() {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/reset-password', {
+      await axios.post(`${API_BASE_URL}/api/auth/reset-password`, {
         email,
         resetCode,
         newPassword

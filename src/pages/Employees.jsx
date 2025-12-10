@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import EmployeeCard from '../components/EmployeeCard';
+import API_BASE_URL from '../config/api';
 
 export default function Employees() {
   const [emps, setEmps]   = useState([]);
@@ -14,7 +15,7 @@ export default function Employees() {
       return;
     }
 
-    axios.get('/api/employees', {
+    axios.get(`${API_BASE_URL}/api/employees`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => {
@@ -36,7 +37,7 @@ export default function Employees() {
 
     try {
       await axios.post(
-        `/api/employees/${employeeId}/apply`,
+        `${API_BASE_URL}/api/employees/${employeeId}/apply`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

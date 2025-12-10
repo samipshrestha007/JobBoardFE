@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { FaShieldAlt, FaEnvelope, FaArrowLeft, FaUser, FaLock, FaPhone, FaBriefcase, FaClock } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 export default function VerifyEmail() {
   const [step, setStep] = useState(1); // 1: code, 2: registration
@@ -38,7 +39,7 @@ export default function VerifyEmail() {
     }
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/check-code', {
+      await axios.post(`${API_BASE_URL}/api/auth/check-code`, {
         email,
         verificationCode
       });
@@ -94,7 +95,7 @@ export default function VerifyEmail() {
     if (!validateForm()) return;
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/verify-email', {
+      const response = await axios.post(`${API_BASE_URL}/api/auth/verify-email`, {
         email,
         verificationCode,
         ...form

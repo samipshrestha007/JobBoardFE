@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaBriefcase, FaBuilding, FaMapMarkerAlt, FaFileAlt, FaPhone, FaMoneyBillWave } from 'react-icons/fa';
+import API_BASE_URL from '../config/api';
 
 export default function PostJob() {
   const [form, setForm] = useState({
@@ -82,7 +83,7 @@ export default function PostJob() {
 
     const token = localStorage.getItem('token');
     try {
-      await axios.post('/api/jobs', form, {
+      await axios.post(`${API_BASE_URL}/api/jobs`, form, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert('Job posted successfully!');
