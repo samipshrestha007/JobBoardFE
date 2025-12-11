@@ -12,7 +12,7 @@ export default function Hero() {
       <motion.section
         className="relative h-[600px] flex items-center justify-center text-white"
         style={{
-          background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/hero-bg.jpg') center/cover no-repeat"
+          background: "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdhHe79aHGHO5SfYZ01rniGOn7--_yPBXC4HIlynkunrmLLU3rli-La4uyaHQq76-ywBUL6RDQ_qzZ4FxW39LM4ERCN9balNn4FJwRUQ&s') center/cover no-repeat"
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
