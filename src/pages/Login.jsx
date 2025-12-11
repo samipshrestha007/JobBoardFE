@@ -25,7 +25,7 @@ export default function Login() {
   return (
     <div className="flex h-screen">
       {/* Left image section */}
-      <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/hero-bg.jpg')" }}>
+      <div className="hidden md:flex w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('https://alumni.amrita.edu/wp-content/uploads/2023/06/job_search_portals.png')" }}>
         {/* Optional overlay or logo */}
       </div>
 
